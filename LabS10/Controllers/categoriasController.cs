@@ -10,128 +10,129 @@ using LabS10.Models;
 
 namespace LabS10.Controllers
 {
-    public class categoriasController : Controller
+    public class clientesController : Controller
     {
         private NeptunoEntities db = new NeptunoEntities();
 
-        // GET: categorias
+        // GET: clientes
         public ActionResult Index()
         {
-            return View(db.categorias.ToList());
+
+            
+            return View(db.clientes.ToList());
         }
 
-        // GET: categorias/Details/5
-        public ActionResult Details(int? id)
+        // GET: clientes/Details/5
+
+        //Listar
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            categorias categorias = db.categorias.Find(id);
-            if (categorias == null)
+            clientes clientes = db.clientes.Find(id);
+            if (clientes == null)
             {
                 return HttpNotFound();
             }
-            return View(categorias);
+            return View(clientes);
         }
 
-        // GET: categorias/Create
+        // GET: clientes/Create
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: categorias/Create
+        
+        // POST: clientes/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idcategoria,nombrecategoria,descripcion,Activo,CodCategoria")] categorias categorias)
+        public ActionResult Create([Bind(Include = "idCliente,NombreCompañia,NombreContacto,CargoContacto,Direccion,Ciudad,Region,Pais,Telefono,CodPostal,Fax,Activo")] clientes clientes)
         {
+
             if (ModelState.IsValid)
             {
-                categorias.Activo = true;
-                db.categorias.Add(categorias);
+                clientes.Activo = true;
+
+                db.clientes.Add(clientes);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(categorias);
-        }
+            return View(clientes);
 
-        // GET: categorias/Edit/5
-        public ActionResult Edit(int? id)
+        }
+        // GET: clientes/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            categorias categorias = db.categorias.Find(id);
-            if (categorias == null)
+            clientes clientes = db.clientes.Find(id);
+            if (clientes == null)
             {
                 return HttpNotFound();
             }
-            return View(categorias);
+            return View(clientes);
         }
 
-        // POST: categorias/Edit/5
+        // POST: clientes/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idcategoria,nombrecategoria,descripcion,Activo,CodCategoria")] categorias categorias)
+        public ActionResult Edit([Bind(Include = "idCliente,NombreCompañia,NombreContacto,CargoContacto,Direccion,Ciudad,Region,CodPostal,Pais,Telefono,Fax")] clientes clientes)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categorias).State = EntityState.Modified;
+                db.Entry(clientes).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categorias);
+            return View(clientes);
         }
 
-        // GET: categorias/Delete/5
-
-        // delete id update set activo = 1  set where activo = 0
-        // Solo lista los que tienen activo = 1 (verdadero)
-        // los que son activo al darle clic en eliminar se cambia a false en la base de datos y por ser false, no se lista.
-
-        public ActionResult Delete(int? id)
+        // GET: clientes/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            categorias categorias = db.categorias.Find(id);
-            if (categorias == null)
+            clientes clientes = db.clientes.Find(id);
+            if (clientes == null)
             {
                 return HttpNotFound();
             }
-            return View(categorias);
+            return View(clientes);
         }
 
-        // POST: categorias/Delete/5
+
+        // POST: clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            categorias categorias = db.categorias.Find(id);
+            clientes clientes = db.clientes.Find(id);
 
-            if (categorias != null)
+            if (clientes != null)
             {
-                categorias.Activo = false;
-                db.Entry(categorias).State = EntityState.Modified;
+
+                clientes.Activo = false;
+                db.Entry(clientes).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            db.categorias.Remove(categorias);
+           
+           
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-       
- 
 
-
-    protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
@@ -141,3 +142,4 @@ namespace LabS10.Controllers
         }
     }
 }
+
